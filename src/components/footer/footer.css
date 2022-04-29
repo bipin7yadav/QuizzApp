@@ -1,0 +1,19 @@
+.footer{
+    background-color: aquamarine;
+    text-align: center;
+    box-sizing: border-box;
+    padding: .1rem;
+}
+
+.footIcons{
+    font-size: 2rem;
+    
+}
+
+.social{
+    display: flex;
+    box-sizing: border-box;
+    padding: 0 44% 0 44%;
+    justify-content: space-between;
+    align-items: center;
+}

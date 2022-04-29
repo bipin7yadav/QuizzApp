@@ -1,0 +1,7 @@
+.Broken{
+    box-sizing: border-box;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
