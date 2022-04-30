@@ -1,0 +1,23 @@
+.header{
+    width: 100%;
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 1rem 0 1rem;
+    background-color:aquamarine;
+}
+
+.icon{
+    font-size: 3.2rem;
+}
+
+.webName{
+}
+
+.rightIcons{
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+}
