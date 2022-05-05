@@ -1,0 +1,28 @@
+
+.mapping{
+    margin: .37rem;
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.label{
+    background-color: powderblue;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+}
+
+.scoreCard{
+    background-color: yellow;
+    width: max-content;
+    font-size: larger;
+    margin: 4px;
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 1rem;
+}
