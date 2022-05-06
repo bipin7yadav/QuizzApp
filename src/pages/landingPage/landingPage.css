@@ -3,7 +3,6 @@
     border: 1px solid Black;
     display: flex;
     justify-content: space-around;
-    /* background-color: aqua; */
 }
 .main-img{
     width: 50%;
@@ -15,8 +14,8 @@
     width: 100%;
     margin: 10px;
     object-fit: contain;
-    /* background-color: blueviolet; */
     margin-right: 5rem;
+    filter: contrast(190%);
 }
 .btn{
     display: flex;
@@ -32,3 +31,24 @@
     background-color:lightseagreen;
     cursor: pointer;
 }
+
+
+@media only screen and (max-width: 688px) {
+    body {
+      font-size: 13px;
+    }
+
+    .logo{
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        width: 100vw;
+        height: 80vh;
+    }
+
+    .main-img{
+        width: 80%;
+        height: 45vh;
+        box-sizing: border-boxx;
+    }
+  }

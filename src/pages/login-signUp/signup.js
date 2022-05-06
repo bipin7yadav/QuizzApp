@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom"
 import "./auth.css"
+import {useQuest} from "../../context/context"
+
 function SignUp() {
+    const {arrayState:{mode}}=useQuest()
     return (
-        <div className="loginForm">
-            <div className="scontent">
+        <div className="loginForm" >
+            <div className="scontent" style={{backgroundColor:mode?"inherit":"seashell"}}>
                 <div>
                     <h2>SignUp</h2>
                 </div>

@@ -13,7 +13,10 @@
     font-size: 3.2rem;
 }
 
-.webName{
+.mode{
+    border: none;
+    background-color: aquamarine;
+    cursor: pointer;
 }
 
 .rightIcons{
@@ -21,3 +24,16 @@
     display: flex;
     justify-content: space-between;
 }
+
+@media only screen and (max-width: 688px) {
+    body{
+        font-size: 13px;
+    }
+
+    .rightIcons{
+        width: 35%;
+        display: flex;
+        justify-content: space-between;
+    }
+  }
+  
