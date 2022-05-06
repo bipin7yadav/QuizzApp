@@ -1,0 +1,47 @@
+.loginForm{
+    border: 1px solid black;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 79.5vh;
+}
+.scontent{
+    border: 1px solid black;
+    height: 75%;
+    box-sizing: border-box;
+    width: 24rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: .7rem;
+}
+.lContent{
+    /* background-color: aqua; */
+    border: 1px solid black;
+    height: 60%;
+    box-sizing: border-box;
+    width: 24rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: .7rem;
+}
+.btns{
+    width: 100%;
+    padding: .3rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+.inp{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inputs{
+    padding: .3rem;
+    width: 96%;
+    border-radius: 1rem;
+}
+
