@@ -8,7 +8,7 @@ function LandingPage(){
             </div>
             <div className="btn">
                 <div>
-                    <h1>Extraordinary Creative Quiz Games</h1>
+                    <h2>Extraordinary Creative Quiz Games</h2>
                 </div>
                 <div>
                     <p>

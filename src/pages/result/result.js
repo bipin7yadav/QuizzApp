@@ -1,9 +1,9 @@
 import "./result.css"
 import {useQuest} from "../../context/context"
-import {response} from "../../quizPage/mathsquiz"
+
 
 function Result(){
-    const {questions,Fscore,arrayState:{array}}=useQuest()
+    const {questions,Fscore,arrayState:{array,mode}}=useQuest()
     return(
         <div className="Result">
             <div className="card"><div className="scoreCard">You Scored {Fscore} out of 10</div></div>
@@ -13,12 +13,11 @@ function Result(){
                 <div>Answer</div>
             </div>
             {questions.map((a,index)=>
-            <div className="mapping">
+            <div className="mapping" style={{backgroundColor:mode?"inherit":"whiteSmoke"}}>
                 <div> {array[index]}</div>
                 <div className="question">{a.question}</div>
                 <div className="isCorrect">{a.options.map((a)=>
                 a.isCorrect?<div>{a.answer}</div>:null
-                // <div>{a.answer}</div>
                 )}
                 </div>
             </div>

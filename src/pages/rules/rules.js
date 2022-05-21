@@ -1,10 +1,12 @@
 import "./rules.css"
 import {Link}from "react-router-dom"
+import {useQuest} from "../../context/context"
 
 function Rules(){
+    const {arrayState:{mode}}=useQuest()
     return(
         <div className="content">
-            <div className="Rule">
+            <div className="Rule" style={{backgroundColor:mode?"inherit":"Lavender"}}>
                 <div className="imgC" >
                     <img src="./assets/rules.jpg" alt="none" className="Rulesimg"/>
                 </div>

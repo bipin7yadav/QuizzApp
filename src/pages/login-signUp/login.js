@@ -1,13 +1,16 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import "./auth.css"
 import {useAuth} from "../../Authentication/authContext"
+import {useQuest} from "../../context/context"
+
 function Login() {
     const {login,setLogin}=useAuth();
     const location=useLocation();
     const navigate=useNavigate()
+    const {arrayState:{mode}}=useQuest()
     return (
-        <div className="loginForm">
-            <div className="lContent">
+        <div className="loginForm" >
+            <div className="lContent" style={{backgroundColor:mode?"inherit":"lightGray"}}>
                 <div>
                     <h2>Login</h2>
                 </div>
