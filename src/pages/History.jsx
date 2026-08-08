@@ -7,7 +7,8 @@ import {
   Clock, 
   Calendar, 
   ArrowLeft, 
-  Award
+  Award,
+  Heart
 } from 'lucide-react';
 
 export const History = () => {
@@ -66,44 +67,68 @@ export const History = () => {
             <div
               key={attempt.id || idx}
               className="glass-card"
-              style={{ padding: '1.25rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}
+              style={{ padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
             >
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#818cf8' }}>{attempt.quizCategory || 'General'}</span>
-                  <span style={{ color: '#64748b' }}>•</span>
-                  <span style={{ fontSize: '0.75rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Calendar size={12} />
-                    <span>{attempt.date}</span>
-                  </span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#818cf8' }}>{attempt.quizCategory || 'General'}</span>
+                    <span style={{ color: '#64748b' }}>•</span>
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                      <Calendar size={12} />
+                      <span>{attempt.date}</span>
+                    </span>
+                  </div>
+
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.35rem' }}>{attempt.quizTitle}</h4>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.8rem', color: '#94a3b8' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                      <Clock size={14} color="#06b6d4" />
+                      <span>{attempt.timeSec} seconds</span>
+                    </span>
+                    <span>Player: <strong style={{ color: '#f8fafc' }}>{attempt.playerName}</strong></span>
+                  </div>
                 </div>
 
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.35rem' }}>{attempt.quizTitle}</h4>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ background: 'rgba(99, 102, 241, 0.15)', border: '1px solid rgba(99, 102, 241, 0.3)', padding: '0.5rem 1rem', borderRadius: '12px', textAlign: 'center' }}>
+                    <span style={{ fontSize: '1.2rem', fontWeight: 900, color: '#818cf8', display: 'block', leading: 1 }}>{attempt.percentage}%</span>
+                    <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8' }}>{attempt.score}/{attempt.total} Qs</span>
+                  </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.8rem', color: '#94a3b8' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Clock size={14} color="#06b6d4" />
-                    <span>{attempt.timeSec} seconds</span>
-                  </span>
-                  <span>Player: <strong style={{ color: '#f8fafc' }}>{attempt.playerName}</strong></span>
+                  <button
+                    onClick={() => handleRetry(attempt.quizId)}
+                    className="btn-secondary"
+                    style={{ padding: '0.5rem 0.85rem' }}
+                  >
+                    <RotateCcw size={16} />
+                  </button>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ background: 'rgba(99, 102, 241, 0.15)', border: '1px solid rgba(99, 102, 241, 0.3)', padding: '0.5rem 1rem', borderRadius: '12px', textAlign: 'center' }}>
-                  <span style={{ fontSize: '1.2rem', fontWeight: 900, color: '#818cf8', display: 'block', leading: 1 }}>{attempt.percentage}%</span>
-                  <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#94a3b8' }}>{attempt.score}/{attempt.total} Qs</span>
+              {attempt.romanticRemark && (
+                <div style={{ width: '100%', background: 'rgba(244, 63, 94, 0.1)', border: '1px solid rgba(244, 63, 94, 0.3)', padding: '0.65rem 0.85rem', borderRadius: '10px', fontSize: '0.8rem', color: '#fecdd3' }}>
+                  <span style={{ fontWeight: 800, color: '#f43f5e', display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.2rem' }}>
+                    <Heart size={14} fill="#f43f5e" />
+                    <span>Final Loved One Remark / Note:</span>
+                  </span>
+                  <em>"{attempt.romanticRemark}"</em>
                 </div>
+              )}
 
-                <button
-                  onClick={() => handleRetry(attempt.quizId)}
-                  className="btn-secondary"
-                  style={{ padding: '0.5rem', borderRadius: '12px' }}
-                  title="Retry Quiz"
-                >
-                  <RotateCcw size={16} />
-                </button>
-              </div>
+              {attempt.questionRemarks && Object.keys(attempt.questionRemarks).length > 0 && (
+                <div style={{ width: '100%', background: 'rgba(30, 41, 59, 0.6)', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '0.65rem 0.85rem', borderRadius: '10px', fontSize: '0.8rem' }}>
+                  <span style={{ fontWeight: 800, color: '#c084fc', display: 'block', marginBottom: '0.35rem' }}>
+                    💭 Question-by-Question Reactions:
+                  </span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.78rem', color: '#cbd5e1' }}>
+                    {Object.entries(attempt.questionRemarks).map(([qId, rem], rIdx) => (
+                      rem ? <div key={qId}><strong>• Q{rIdx + 1}:</strong> <em>"{rem}"</em></div> : null
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>

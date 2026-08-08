@@ -9,7 +9,8 @@ import {
   ArrowLeft,
   Users,
   Target,
-  SkipForward
+  SkipForward,
+  Heart
 } from 'lucide-react';
 
 export const QuizPlay = () => {
@@ -23,6 +24,8 @@ export const QuizPlay = () => {
     importQuiz,
     currentQuestionIndex, 
     selectedAnswers, 
+    questionRemarks,
+    setQuestionRemark,
     selectOption, 
     handleNextQuestion, 
     timeRemaining, 
@@ -376,6 +379,22 @@ export const QuizPlay = () => {
               </button>
             );
           })}
+        </div>
+
+        {/* Per-Question Loved One Remark Input */}
+        <div style={{ marginBottom: '1.25rem', background: 'rgba(30, 41, 59, 0.5)', border: '1px solid rgba(244, 63, 94, 0.3)', padding: '0.75rem 1rem', borderRadius: '12px' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', fontWeight: 800, color: '#f43f5e', marginBottom: '0.35rem' }}>
+            <Heart size={14} fill="#f43f5e" />
+            <span>Loved One's Reaction / Thought on Question #{currentQuestionIndex + 1} (Optional)</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Share a reaction or memory about this question... (e.g. 'Haha you always order this!')"
+            value={questionRemarks[currentQ.id] || ''}
+            onChange={(e) => setQuestionRemark(currentQ.id, e.target.value)}
+            className="form-input"
+            style={{ padding: '0.45rem 0.75rem', fontSize: '0.825rem', width: '100%' }}
+          />
         </div>
 
         {/* Footer Actions */}

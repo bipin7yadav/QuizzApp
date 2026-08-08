@@ -10,6 +10,7 @@ import { QuizPlay } from './pages/QuizPlay';
 import { Results } from './pages/Results';
 import { Leaderboard } from './pages/Leaderboard';
 import { History } from './pages/History';
+import { ResponseView } from './pages/ResponseView';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -33,6 +34,7 @@ function App() {
             <Route path="/quiz/:id" element={<QuizPlay />} />
             <Route path="/quiz/shared/:slug" element={<QuizPlay />} />
             <Route path="/result" element={<Results />} />
+            <Route path="/response" element={<ResponseView />} />
             <Route path="/leaderboard/:quizId" element={<Leaderboard />} />
             <Route path="/history" element={<History />} />
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -58,6 +58,11 @@ export const ShareScreen = () => {
     navigate(`/quiz/${quiz.id}`);
   };
 
+  const handleShareWhatsApp = () => {
+    const text = `❤️ Hey! I created a special romantic quiz for you: "${quiz.title}"! Open the link to play and share your thoughts: ${shareUrl}`;
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
   return (
     <div className="main-content" style={{ maxWidth: '700px', textAlign: 'center' }}>
       
@@ -105,6 +110,14 @@ export const ShareScreen = () => {
               >
                 {copied ? <Check size={16} /> : <Copy size={16} />}
                 <span>{copied ? 'Copied!' : 'Copy'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleShareWhatsApp}
+                className="btn-primary"
+                style={{ background: 'linear-gradient(135deg, #25d366, #128c7e)', padding: '0.5rem 1rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+              >
+                <span>📱 Share via WhatsApp</span>
               </button>
             </div>
           </div>

@@ -471,6 +471,48 @@ export const BUILT_IN_QUIZZES = [
         correctIndex: 1
       }
     ]
+  },
+  {
+    id: 'couples-101',
+    title: 'Love & Couple Chemistry Quiz ❤️',
+    category: 'Couples & Romance',
+    difficulty: 'Easy',
+    description: 'A special romantic quiz for partners to test how well they know each other and leave personal thoughts on every question!',
+    icon: 'Heart',
+    color: 'from-pink-500 to-rose-600',
+    shareSlug: 'couples-101',
+    questions: [
+      {
+        id: 'q-love1',
+        question: 'Where did we go on our first official date together?',
+        options: ['A cozy coffee shop', 'A romantic dinner restaurant', 'A fun movie theater', 'A walk in the park'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-love2',
+        question: 'What is my ultimate go-to comfort food after a long day?',
+        options: ['Pizza & Ice cream', 'Hot Ramen or Soup', 'Burgers & Fries', 'Chocolate & Dessert'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-love3',
+        question: 'What is our dream vacation destination together?',
+        options: ['Tropical beach resort in Bali / Maldives', 'Historic road trip across Europe', 'Cozy mountain cabin in Switzerland', 'Exploring vibrant night markets in Japan'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-love4',
+        question: 'What is my primary Love Language?',
+        options: ['Quality Time', 'Words of Affirmation', 'Acts of Service', 'Physical Touch & Hugs'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-love5',
+        question: 'Who is most likely to fall asleep first during movie night?',
+        options: ['Definitely Me! 😴', 'Definitely You! 😴', 'Both of us at the same time!', 'Neither — we watch till 3 AM!'],
+        correctIndex: 1
+      }
+    ]
   }
 ];
 
@@ -556,12 +598,22 @@ export const QuizProvider = ({ children }) => {
   }, [activeQuiz, isQuizCompleted, timeRemaining, currentQuestionIndex, quizSettings]);
 
   // Start playing a quiz with custom timer settings
+  const [questionRemarks, setQuestionRemarks] = useState({});
+
+  const setQuestionRemark = (questionId, remarkText) => {
+    setQuestionRemarks(prev => ({
+      ...prev,
+      [questionId]: remarkText
+    }));
+  };
+
   const startQuiz = (quiz, customSettings = null) => {
     const activeSettings = customSettings || quizSettings;
     setQuizSettings(activeSettings);
     setActiveQuiz(quiz);
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
+    setQuestionRemarks({});
     setTimeRemaining(activeSettings.timerEnabled ? activeSettings.timePerQuestion : null);
     setTotalTimeTaken(0);
     setIsQuizCompleted(false);
@@ -616,7 +668,9 @@ export const QuizProvider = ({ children }) => {
       date: dateStr,
       playerName,
       questions: activeQuiz.questions,
-      selectedAnswers: { ...selectedAnswers }
+      selectedAnswers: { ...selectedAnswers },
+      questionRemarks: { ...questionRemarks },
+      romanticRemark: ''
     };
 
     setLastCompletedResult(result);
@@ -635,10 +689,47 @@ export const QuizProvider = ({ children }) => {
         total,
         percentage,
         timeSec: totalTimeTaken,
-        date: dateStr
+        date: dateStr,
+        romanticRemark: ''
       },
       ...prev
     ]);
+  };
+
+  // Save romantic note / written remark for an attempt
+  const saveAttemptRemark = (attemptId, remarkText) => {
+    setLastCompletedResult(prev => (prev && prev.id === attemptId ? { ...prev, romanticRemark: remarkText } : prev));
+    setAttempts(prev => prev.map(item => item.id === attemptId ? { ...item, romanticRemark: remarkText } : item));
+    setLeaderboard(prev => prev.map(item => item.id === attemptId ? { ...item, romanticRemark: remarkText } : item));
+  };
+
+  // Import a shared response attempt sent by partner
+  const importAttemptResponse = (parsedResponse) => {
+    if (!parsedResponse || !parsedResponse.t) return;
+    const importedResult = {
+      id: `res-${nanoid(8)}`,
+      quizId: 'imported-couples',
+      quizTitle: parsedResponse.t,
+      quizCategory: parsedResponse.c || 'Couples & Romance',
+      quizDifficulty: 'Easy',
+      score: parsedResponse.s || 0,
+      total: parsedResponse.tot || (parsedResponse.q ? parsedResponse.q.length : 0),
+      percentage: 100,
+      timeSec: parsedResponse.time || 0,
+      date: parsedResponse.d || new Date().toISOString().split('T')[0],
+      playerName: parsedResponse.p || 'Partner',
+      questions: parsedResponse.q ? parsedResponse.q.map((item, idx) => ({ id: item.id || `q-${idx}`, question: item.text, options: item.opts })) : [],
+      selectedAnswers: parsedResponse.ans || {},
+      questionRemarks: parsedResponse.rem || {},
+      romanticRemark: parsedResponse.note || ''
+    };
+
+    setAttempts(prev => {
+      if (prev.some(item => item.quizTitle === importedResult.quizTitle && item.romanticRemark === importedResult.romanticRemark && item.playerName === importedResult.playerName)) {
+        return prev;
+      }
+      return [importedResult, ...prev];
+    });
   };
 
   // Create a new user quiz
@@ -686,6 +777,8 @@ export const QuizProvider = ({ children }) => {
       setQuizSettings,
       currentQuestionIndex,
       selectedAnswers,
+      questionRemarks,
+      setQuestionRemark,
       timeRemaining,
       totalTimeTaken,
       isQuizCompleted,
@@ -694,6 +787,8 @@ export const QuizProvider = ({ children }) => {
       selectOption,
       handleNextQuestion,
       finishQuiz,
+      saveAttemptRemark,
+      importAttemptResponse,
       createQuiz,
       importQuiz
     }}>

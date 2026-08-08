@@ -116,6 +116,60 @@ export const QuizBuilder = () => {
     navigate(`/share/${newQuiz.shareSlug}`);
   };
 
+  const loadRomanticTemplate = (templateType) => {
+    if (templateType === 'proposal') {
+      setTitle('Will You Be My Valentine? 🌹');
+      setCategory('Couples & Romance');
+      setDifficulty('Easy');
+      setDescription('A sweet romantic proposal quiz! Answer the questions, leave your thoughts on each memory, and write your final love note.');
+      setQuestions([
+        {
+          id: 'q-p1',
+          questionText: 'How much do I adore your smile?',
+          options: ['To infinity and beyond! ✨', 'More than words can express ❤️', '1000% forever! 💖', 'All of the above! 🌹'],
+          correctIndex: 3
+        },
+        {
+          id: 'q-p2',
+          questionText: 'What is my absolute favorite thing about us?',
+          options: ['How we laugh together endlessly 😂', 'How safe and loved I feel with you 🤗', 'Our late night deep talks 🌙', 'Literally EVERYTHING about us! ❤️'],
+          correctIndex: 3
+        },
+        {
+          id: 'q-p3',
+          questionText: 'Will you officially be my Valentine / Forever Love?',
+          options: ['YES! A thousand times yes! 💖', 'YES! Absolutely! 🌹', 'YES! You are my world! 🥰', 'YES! Forever & Always! ❤️'],
+          correctIndex: 0
+        }
+      ]);
+    } else if (templateType === 'get-to-know') {
+      setTitle('Couple Chemistry & Get-to-Know Quiz 💑');
+      setCategory('Couples & Romance');
+      setDifficulty('Easy');
+      setDescription('Test how well we know each other\'s favorite memories, secret habits, and romantic dreams!');
+      setQuestions([
+        {
+          id: 'q-g1',
+          questionText: 'Where is my favorite place in the world to be with you?',
+          options: ['Cozy at home cuddling on the couch 🛋️', 'On a beach watching the sunset 🌅', 'Exploring a new city together 🗺️', 'Anywhere as long as you are with me ❤️'],
+          correctIndex: 3
+        },
+        {
+          id: 'q-g2',
+          questionText: 'What is my favorite nickname or thing you call me?',
+          options: ['Sweetheart / Babe 💕', 'My Love / Honey 🍯', 'My Favorite Person 🌟', 'All of them make me smile! 😊'],
+          correctIndex: 3
+        },
+        {
+          id: 'q-g3',
+          questionText: 'What is our ultimate dream weekend plan together?',
+          options: ['Order takeaway & binge a movie series 🍿', 'Go on a romantic weekend getaway 🧳', 'Cook a gourmet meal together 🍝', 'Late night stargazing & deep talks ✨'],
+          correctIndex: 0
+        }
+      ]);
+    }
+  };
+
   return (
     <div className="main-content" style={{ maxWidth: '850px' }}>
       
@@ -129,14 +183,45 @@ export const QuizBuilder = () => {
       </button>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-        <div className="logo-icon-box" style={{ width: '48px', height: '48px' }}>
+        <div className="logo-icon-box" style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #f43f5e, #ec4899)' }}>
           <PlusCircle size={26} color="#ffffff" />
         </div>
         <div>
           <h1 style={{ fontSize: '2rem', fontWeight: 900, color: '#ffffff' }}>Quiz Builder</h1>
           <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
-            Author your custom quiz questions and generate a shareable link instantly.
+            Author custom quizzes, romantic proposals, or couples get-to-know questions and generate a shareable link instantly.
           </p>
+        </div>
+      </div>
+
+      {/* Romantic Template Loader Presets */}
+      <div style={{ background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(168, 85, 247, 0.15))', border: '1px solid rgba(244, 63, 94, 0.35)', padding: '1.25rem', borderRadius: '16px', marginBottom: '2rem', textAlign: 'left' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f43f5e', fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+          <Share2 size={18} color="#f43f5e" />
+          <span>✨ One-Click Romantic & Proposal Quiz Templates</span>
+        </div>
+        <p style={{ color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '1rem' }}>
+          Want to ask someone you love out, propose for Valentine's, or test your couple chemistry? Pick a pre-built template to start:
+        </p>
+
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => loadRomanticTemplate('proposal')}
+            className="btn-secondary"
+            style={{ background: 'rgba(244, 63, 94, 0.2)', borderColor: 'rgba(244, 63, 94, 0.5)', color: '#fecdd3', fontSize: '0.8rem' }}
+          >
+            <span>🌹 Will You Be My Valentine? (Proposal)</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => loadRomanticTemplate('get-to-know')}
+            className="btn-secondary"
+            style={{ background: 'rgba(168, 85, 247, 0.2)', borderColor: 'rgba(168, 85, 247, 0.5)', color: '#e9d5ff', fontSize: '0.8rem' }}
+          >
+            <span>💑 Couple Chemistry & Get-To-Know</span>
+          </button>
         </div>
       </div>
 
@@ -187,10 +272,14 @@ export const QuizBuilder = () => {
                 onChange={(e) => setCategory(e.target.value)}
                 className="form-select"
               >
+                <option value="Couples & Romance">❤️ Couples & Romance (Loved Ones Mode)</option>
                 <option value="General">General</option>
                 <option value="Mathematics">Mathematics</option>
                 <option value="React.js">React.js</option>
                 <option value="JavaScript">JavaScript</option>
+                <option value="MySQL">MySQL</option>
+                <option value="Python">Python</option>
+                <option value="CSS">CSS</option>
                 <option value="General Knowledge">General Knowledge</option>
                 <option value="Science">Science</option>
                 <option value="History">History</option>

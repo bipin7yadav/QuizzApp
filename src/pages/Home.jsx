@@ -17,11 +17,13 @@ import {
   Zap,
   Clock,
   Database,
-  Palette
+  Palette,
+  Heart
 } from 'lucide-react';
 
 const getCategoryIcon = (category) => {
   switch (category) {
+    case 'Couples & Romance': return Heart;
     case 'Mathematics': return Calculator;
     case 'React.js': return Code2;
     case 'JavaScript': return FileCode2;
@@ -47,7 +49,7 @@ export const Home = () => {
   const [timerEnabled, setTimerEnabled] = useState(true);
   const [timePerQuestion, setTimePerQuestion] = useState(45);
 
-  const baseCategories = ['All', 'Mathematics', 'React.js', 'JavaScript', 'MySQL', 'Python', 'CSS', 'General Knowledge', 'Science', 'History', 'Community'];
+  const baseCategories = ['All', 'Couples & Romance', 'Mathematics', 'React.js', 'JavaScript', 'MySQL', 'Python', 'CSS', 'General Knowledge', 'Science', 'History', 'Community'];
   const customCategoriesInUse = Array.from(new Set(allQuizzes.map(q => q.category))).filter(c => !baseCategories.includes(c));
   const categories = [...baseCategories, ...customCategoriesInUse];
 
