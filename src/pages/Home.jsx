@@ -18,8 +18,12 @@ import {
   Clock,
   Database,
   Palette,
-  Heart
+  Heart,
+  Dices,
+  Edit,
+  Trash2
 } from 'lucide-react';
+import { soundFX } from '../utils/audio';
 
 const getCategoryIcon = (category) => {
   switch (category) {
@@ -39,7 +43,7 @@ const getCategoryIcon = (category) => {
 };
 
 export const Home = () => {
-  const { allQuizzes, startQuiz } = useQuiz();
+  const { allQuizzes, startQuiz, deleteQuiz } = useQuiz();
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,6 +52,21 @@ export const Home = () => {
   const [selectedQuizForConfig, setSelectedQuizForConfig] = useState(null);
   const [timerEnabled, setTimerEnabled] = useState(true);
   const [timePerQuestion, setTimePerQuestion] = useState(45);
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  const handleSpinRoulette = () => {
+    if (allQuizzes.length === 0) return;
+    setIsSpinning(true);
+    soundFX.playPop();
+    setTimeout(() => {
+      const randomIdx = Math.floor(Math.random() * allQuizzes.length);
+      const chosenQuiz = allQuizzes[randomIdx];
+      setIsSpinning(false);
+      soundFX.playSparkle();
+      startQuiz(chosenQuiz, { timerEnabled: true, timePerQuestion: 45 });
+      navigate(`/quiz/${chosenQuiz.id}`);
+    }, 700);
+  };
 
   const baseCategories = ['All', 'Couples & Romance', 'Mathematics', 'React.js', 'JavaScript', 'MySQL', 'Python', 'CSS', 'General Knowledge', 'Science', 'History', 'Community'];
   const customCategoriesInUse = Array.from(new Set(allQuizzes.map(q => q.category))).filter(c => !baseCategories.includes(c));
@@ -114,14 +133,80 @@ export const Home = () => {
             </p>
           </div>
 
-          <button
-            onClick={() => navigate('/create')}
-            className="btn-primary"
-            style={{ padding: '0.875rem 1.75rem', fontSize: '0.95rem', whiteSpace: 'nowrap' }}
-          >
-            <PlusCircle size={20} />
-            <span>Create Custom Quiz</span>
-          </button>
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => navigate('/create')}
+              className="btn-primary"
+              style={{ padding: '0.875rem 1.5rem', fontSize: '0.95rem', whiteSpace: 'nowrap' }}
+            >
+              <PlusCircle size={20} />
+              <span>Create Custom Quiz</span>
+            </button>
+
+            <button
+              onClick={handleSpinRoulette}
+              disabled={isSpinning}
+              className="btn-secondary"
+              style={{ padding: '0.875rem 1.5rem', fontSize: '0.95rem', whiteSpace: 'nowrap', background: 'rgba(245, 158, 11, 0.2)', borderColor: 'rgba(245, 158, 11, 0.5)', color: '#fef08a' }}
+            >
+              <Dices size={20} style={{ animation: isSpinning ? 'spin 0.5s linear infinite' : 'none' }} />
+              <span>{isSpinning ? 'Spinning Roulette...' : '🎰 Quiz Roulette (Surprise Me!)'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Featured Romantic & Proposal Templates Banner */}
+        <div style={{ background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(168, 85, 247, 0.15))', border: '1px solid rgba(244, 63, 94, 0.4)', borderRadius: '20px', padding: '1.5rem', marginBottom: '2rem', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#f43f5e', fontWeight: 800, fontSize: '0.8rem', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                <Heart size={16} fill="#f43f5e" />
+                <span>Couples & Loved Ones Special</span>
+              </div>
+              <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#ffffff' }}>
+                Create Romantic Proposals & Couple Quizzes 💖
+              </h2>
+              <p style={{ color: '#cbd5e1', fontSize: '0.85rem', marginTop: '0.25rem' }}>
+                No right or wrong answers! Share personalized questions with your loved one, write romantic notes, and read their reactions.
+              </p>
+            </div>
+
+            <button
+              onClick={() => navigate('/create')}
+              className="btn-primary"
+              style={{ background: 'linear-gradient(135deg, #f43f5e, #e11d48)', padding: '0.75rem 1.25rem', fontSize: '0.85rem' }}
+            >
+              <Heart size={18} fill="#ffffff" />
+              <span>Create Romantic Quiz</span>
+            </button>
+          </div>
+
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', paddingTop: '0.5rem', borderTop: '1px solid rgba(244, 63, 94, 0.2)' }}>
+            <span style={{ fontSize: '0.8rem', color: '#fecdd3', fontWeight: 800, alignSelf: 'center' }}>One-Click Presets:</span>
+            <button
+              onClick={() => navigate('/create')}
+              className="btn-secondary"
+              style={{ padding: '0.4rem 0.8rem', fontSize: '0.78rem', background: 'rgba(244, 63, 94, 0.2)', borderColor: 'rgba(244, 63, 94, 0.5)', color: '#fecdd3' }}
+            >
+              🌹 Will You Be My Valentine?
+            </button>
+
+            <button
+              onClick={() => navigate('/create')}
+              className="btn-secondary"
+              style={{ padding: '0.4rem 0.8rem', fontSize: '0.78rem', background: 'rgba(168, 85, 247, 0.2)', borderColor: 'rgba(168, 85, 247, 0.5)', color: '#e9d5ff' }}
+            >
+              💑 Couple Chemistry
+            </button>
+
+            <button
+              onClick={() => navigate('/create')}
+              className="btn-secondary"
+              style={{ padding: '0.4rem 0.8rem', fontSize: '0.78rem', background: 'rgba(6, 182, 212, 0.2)', borderColor: 'rgba(6, 182, 212, 0.5)', color: '#a5f3fc' }}
+            >
+              💌 "Will You Go Out With Me?"
+            </button>
+          </div>
         </div>
 
         {/* Search & Category Filter Bar */}
@@ -222,7 +307,37 @@ export const Home = () => {
                       </span>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      {quiz.isUserCreated && (
+                        <>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/edit/${quiz.shareSlug || quiz.id}`);
+                            }}
+                            className="btn-secondary"
+                            style={{ padding: '0.4rem 0.6rem', color: '#a5b4fc', borderColor: 'rgba(99, 102, 241, 0.4)' }}
+                            title="Edit Quiz"
+                          >
+                            <Edit size={15} />
+                          </button>
+
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (window.confirm(`Delete quiz "${quiz.title}"?`)) {
+                                deleteQuiz(quiz.id);
+                              }
+                            }}
+                            className="btn-secondary"
+                            style={{ padding: '0.4rem 0.6rem', color: '#f43f5e', borderColor: 'rgba(244, 63, 94, 0.4)' }}
+                            title="Delete Quiz"
+                          >
+                            <Trash2 size={15} />
+                          </button>
+                        </>
+                      )}
+
                       <button
                         onClick={(e) => handleShareQuiz(quiz, e)}
                         className="btn-secondary"

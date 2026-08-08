@@ -6,7 +6,7 @@ import {
   Heart, 
   ArrowLeft, 
   Clock, 
-  UserCheck 
+  UserCheck
 } from 'lucide-react';
 
 export const ResponseView = () => {

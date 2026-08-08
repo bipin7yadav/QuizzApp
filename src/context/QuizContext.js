@@ -485,32 +485,62 @@ export const BUILT_IN_QUIZZES = [
       {
         id: 'q-love1',
         question: 'Where did we go on our first official date together?',
-        options: ['A cozy coffee shop', 'A romantic dinner restaurant', 'A fun movie theater', 'A walk in the park'],
+        options: ['A cozy coffee shop ☕', 'A romantic dinner restaurant 🍷', 'A fun movie theater 🍿', 'A walk in the park 🌳'],
         correctIndex: 0
       },
       {
         id: 'q-love2',
         question: 'What is my ultimate go-to comfort food after a long day?',
-        options: ['Pizza & Ice cream', 'Hot Ramen or Soup', 'Burgers & Fries', 'Chocolate & Dessert'],
+        options: ['Pizza & Ice cream 🍕🍦', 'Hot Ramen or Soup 🍜', 'Burgers & Fries 🍔🍟', 'Chocolate & Dessert 🍫🍰'],
         correctIndex: 0
       },
       {
         id: 'q-love3',
         question: 'What is our dream vacation destination together?',
-        options: ['Tropical beach resort in Bali / Maldives', 'Historic road trip across Europe', 'Cozy mountain cabin in Switzerland', 'Exploring vibrant night markets in Japan'],
+        options: ['Tropical beach resort in Bali / Maldives 🌴', 'Historic road trip across Europe 🏰', 'Cozy mountain cabin in Switzerland 🏔️', 'Exploring vibrant night markets in Japan 🗾'],
         correctIndex: 0
       },
       {
         id: 'q-love4',
         question: 'What is my primary Love Language?',
-        options: ['Quality Time', 'Words of Affirmation', 'Acts of Service', 'Physical Touch & Hugs'],
+        options: ['Quality Time ⏳', 'Words of Affirmation 💬', 'Acts of Service 🤝', 'Physical Touch & Hugs 🤗'],
         correctIndex: 0
       },
       {
         id: 'q-love5',
         question: 'Who is most likely to fall asleep first during movie night?',
-        options: ['Definitely Me! 😴', 'Definitely You! 😴', 'Both of us at the same time!', 'Neither — we watch till 3 AM!'],
+        options: ['Definitely Me! 😴', 'Definitely You! 😴', 'Both of us at the same time! 🌙', 'Neither — we watch till 3 AM! 🎬'],
         correctIndex: 1
+      },
+      {
+        id: 'q-love6',
+        question: 'What was my first impression / thought when we first met?',
+        options: ['"Who is this gorgeous angel?" 😍', '"Wow, what an incredible smile!" ✨', '"I need to get to know them right now!" ❤️', '"I felt an instant spark of magic!" ⚡'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-love7',
+        question: 'What is our ultimate idea of a perfect date night?',
+        options: ['Fancy candlelit dinner 🕯️', 'Cooking together while playing music 🍳🎶', 'Late night drive with coffee 🚘☕', 'Cuddling in blankets watching movies 🍿🛋️'],
+        correctIndex: 3
+      },
+      {
+        id: 'q-love8',
+        question: 'Who made the first romantic move / confession in our story?',
+        options: ['I did! With butterflies in my heart 💓', 'You did! And it made my world light up ✨', 'We both kind of knew at the exact same moment! 🥰', 'It was a sweet secret for a bit! 🤫❤️'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-love9',
+        question: 'What is my secret superpower in our relationship?',
+        options: ['Always making you laugh when you are down 😂', 'Giving the warmest, safest hugs 🤗', 'Remembering tiny details & surprising you 🎁', 'Being your #1 biggest supporter always 🏆'],
+        correctIndex: 3
+      },
+      {
+        id: 'q-love10',
+        question: 'How long will I continue to love and cherish you?',
+        options: ['Forever & Always! ❤️', 'To infinity and beyond! ✨', 'In every parallel universe! 🌌', 'All of the above and more! 💖'],
+        correctIndex: 3
       }
     ]
   }
@@ -754,6 +784,30 @@ export const QuizProvider = ({ children }) => {
     return newQuiz;
   };
 
+  // Delete a user-created quiz
+  const deleteQuiz = (quizId) => {
+    setCustomQuizzes(prev => prev.filter(q => q.id !== quizId && q.shareSlug !== quizId));
+  };
+
+  // Update an existing user-created quiz
+  const updateQuiz = (quizId, updatedData) => {
+    setCustomQuizzes(prev => prev.map(q => {
+      if (q.id === quizId || q.shareSlug === quizId) {
+        return {
+          ...q,
+          title: updatedData.title,
+          category: updatedData.category || 'General',
+          difficulty: updatedData.difficulty || 'Medium',
+          description: updatedData.description || 'User created custom quiz.',
+          createdByName: updatedData.authorName || q.createdByName,
+          visibility: updatedData.visibility || q.visibility,
+          questions: updatedData.questions
+        };
+      }
+      return q;
+    }));
+  };
+
   // Import quiz from share URL payload if opening on a new browser/device
   const importQuiz = (importedQuiz) => {
     if (!importedQuiz || !importedQuiz.id) return;
@@ -790,6 +844,8 @@ export const QuizProvider = ({ children }) => {
       saveAttemptRemark,
       importAttemptResponse,
       createQuiz,
+      deleteQuiz,
+      updateQuiz,
       importQuiz
     }}>
       {children}

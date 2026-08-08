@@ -12,6 +12,7 @@ import {
   SkipForward,
   Heart
 } from 'lucide-react';
+import { soundFX } from '../utils/audio';
 
 export const QuizPlay = () => {
   const { id, slug } = useParams();
@@ -38,6 +39,24 @@ export const QuizPlay = () => {
   const [usedSkip, setUsedSkip] = useState(false);
   const [hiddenOptions, setHiddenOptions] = useState({});
   const [audiencePolls, setAudiencePolls] = useState({});
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [kissCount, setKissCount] = useState(0);
+
+  const handleSendKiss = () => {
+    setKissCount(prev => prev + 1);
+    soundFX.playPop();
+  };
+
+  useEffect(() => {
+    return () => {
+      soundFX.stopRomanticMusic();
+    };
+  }, []);
+
+  const handleToggleMusic = () => {
+    const newState = soundFX.toggleRomanticMusic();
+    setIsMusicPlaying(newState);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -171,9 +190,30 @@ export const QuizPlay = () => {
   const currentHiddenOptions = hiddenOptions[currentQuestionIndex] || [];
   const currentAudiencePoll = audiencePolls[currentQuestionIndex] || null;
 
+  const isRomantic = activeQuiz?.category === 'Couples & Romance';
+
   return (
-    <div className="main-content game-play-container" style={{ paddingTop: '1rem', paddingBottom: '2rem' }}>
+    <div className="main-content game-play-container" style={{ paddingTop: '1rem', paddingBottom: '2rem', position: 'relative' }}>
       
+      {isRomantic && (
+        <div className="romantic-floating-hearts">
+          {[...Array(12)].map((_, i) => (
+            <div
+              key={i}
+              className="floating-heart"
+              style={{
+                left: `${(i * 8.3) + (i % 3)}%`,
+                animationDelay: `${i * 0.5}s`,
+                animationDuration: `${5 + (i % 4)}s`,
+                fontSize: `${1.2 + (i % 3) * 0.4}rem`
+              }}
+            >
+              💖
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Top Bar Navigation & Header Controls */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
         <button
@@ -186,6 +226,39 @@ export const QuizPlay = () => {
         </button>
 
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          {isRomantic && (
+            <>
+              <button
+                type="button"
+                onClick={handleSendKiss}
+                className="btn-secondary"
+                style={{
+                  padding: '0.35rem 0.75rem',
+                  fontSize: '0.78rem',
+                  background: 'rgba(244, 63, 94, 0.2)',
+                  borderColor: 'rgba(244, 63, 94, 0.5)',
+                  color: '#fecdd3'
+                }}
+              >
+                <span>💋 Send Hug ({kissCount})</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleToggleMusic}
+                className="btn-secondary"
+                style={{
+                  padding: '0.35rem 0.75rem',
+                  fontSize: '0.78rem',
+                  background: isMusicPlaying ? 'rgba(244, 63, 94, 0.25)' : 'rgba(30, 41, 59, 0.5)',
+                  borderColor: isMusicPlaying ? 'rgba(244, 63, 94, 0.6)' : 'var(--border-color)',
+                  color: isMusicPlaying ? '#fecdd3' : '#94a3b8'
+                }}
+              >
+                <span>{isMusicPlaying ? '🎵 Pause Music' : '🎶 Play Music'}</span>
+              </button>
+            </>
+          )}
           <span style={{ background: 'rgba(99, 102, 241, 0.2)', border: '1px solid rgba(99, 102, 241, 0.4)', color: '#a5b4fc', padding: '0.3rem 0.75rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 800 }}>
             {activeQuiz.category}
           </span>
@@ -331,7 +404,10 @@ export const QuizPlay = () => {
               <button
                 key={oIdx}
                 disabled={isEliminated}
-                onClick={() => selectOption(currentQ.id, oIdx)}
+                onClick={() => {
+                  soundFX.playPop();
+                  selectOption(currentQ.id, oIdx);
+                }}
                 className={`option-btn ${isSelected ? 'selected' : ''}`}
                 style={{
                   padding: '0.75rem 1rem',

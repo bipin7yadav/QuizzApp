@@ -76,6 +76,19 @@ export const Results = () => {
     }
   };
 
+  const getCoupleArchetype = (selectedAnsMap) => {
+    const choices = selectedAnsMap ? Object.values(selectedAnsMap) : [];
+    const sum = choices.reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0);
+    const modulus = sum % 3;
+    if (modulus === 0) {
+      return { title: 'Soulmate Adventurers 🚀✨', desc: 'You two thrive on spontaneous trips, deep late-night talks, and exploring the world hand-in-hand!' };
+    } else if (modulus === 1) {
+      return { title: 'Cozy Homebody Sweethearts 🛋️☕', desc: 'Your ultimate bliss is snuggling on the couch, ordering takeaway, and laughing at inside jokes.' };
+    } else {
+      return { title: 'Hopeless Romantic Dreamers 🌹💖', desc: 'Your love is filled with sweet surprises, poetry, thoughtful gestures, and endless adoring smiles.' };
+    }
+  };
+
   return (
     <div className="main-content" style={{ maxWidth: '750px', textAlign: 'center' }}>
       
@@ -153,6 +166,20 @@ export const Results = () => {
           <div style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.4)', color: '#10b981', padding: '0.75rem', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
             <CheckCircle2 size={18} />
             <span>Score saved to Leaderboard!</span>
+          </div>
+        )}
+
+        {isRomanticCategory && (
+          <div style={{ background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(168, 85, 247, 0.2))', border: '1px solid rgba(244, 63, 94, 0.4)', padding: '1.25rem', borderRadius: '16px', textAlign: 'center' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#f43f5e', textTransform: 'uppercase', display: 'block', marginBottom: '0.25rem' }}>
+              🔮 Couple Compatibility Archetype
+            </span>
+            <h3 style={{ fontSize: '1.3rem', fontWeight: 900, color: '#ffffff', marginBottom: '0.35rem' }}>
+              {getCoupleArchetype(selectedAnswers).title}
+            </h3>
+            <p style={{ color: '#fecdd3', fontSize: '0.85rem', lineHeight: '1.4' }}>
+              {getCoupleArchetype(selectedAnswers).desc}
+            </p>
           </div>
         )}
 

@@ -30,6 +30,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/create" element={<QuizBuilder />} />
+            <Route path="/edit/:id" element={<QuizBuilder />} />
             <Route path="/share/:slug" element={<ShareScreen />} />
             <Route path="/quiz/:id" element={<QuizPlay />} />
             <Route path="/quiz/shared/:slug" element={<QuizPlay />} />

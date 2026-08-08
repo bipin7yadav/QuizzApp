@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuiz } from '../context/QuizContext';
 import { 
   PlusCircle, 
@@ -10,8 +10,11 @@ import {
 } from 'lucide-react';
 
 export const QuizBuilder = () => {
-  const { createQuiz } = useQuiz();
+  const { id } = useParams();
+  const { allQuizzes, createQuiz, updateQuiz } = useQuiz();
   const navigate = useNavigate();
+
+  const isEditMode = Boolean(id);
 
   const [title, setTitle] = useState('');
   const [authorName, setAuthorName] = useState('');
@@ -31,6 +34,28 @@ export const QuizBuilder = () => {
   ]);
 
   const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    if (isEditMode) {
+      const existing = allQuizzes.find(q => q.id === id || q.shareSlug === id);
+      if (existing) {
+        setTitle(existing.title || '');
+        setAuthorName(existing.createdByName || '');
+        setCategory(existing.category || 'General');
+        setDifficulty(existing.difficulty || 'Medium');
+        setDescription(existing.description || '');
+        setVisibility(existing.visibility || 'public');
+        if (existing.questions && existing.questions.length > 0) {
+          setQuestions(existing.questions.map((q, idx) => ({
+            id: q.id || `q-${idx}`,
+            questionText: q.question || '',
+            options: q.options || ['', '', '', ''],
+            correctIndex: q.correctIndex || 0
+          })));
+        }
+      }
+    }
+  }, [id, isEditMode, allQuizzes]);
 
   const handleAddQuestion = () => {
     setQuestions([
@@ -103,17 +128,29 @@ export const QuizBuilder = () => {
 
     const finalCategory = category === 'CUSTOM' ? (customCategory.trim() || 'Custom') : category.trim();
 
-    const newQuiz = createQuiz({
-      title: title.trim(),
-      authorName: authorName.trim() || 'Community Author',
-      category: finalCategory,
-      difficulty,
-      description: description.trim() || 'User created custom quiz.',
-      visibility,
-      questions: formattedQuestions
-    });
-
-    navigate(`/share/${newQuiz.shareSlug}`);
+    if (isEditMode) {
+      updateQuiz(id, {
+        title: title.trim(),
+        authorName: authorName.trim() || 'Community Author',
+        category: finalCategory,
+        difficulty,
+        description: description.trim() || 'User created custom quiz.',
+        visibility,
+        questions: formattedQuestions
+      });
+      navigate(`/share/${id}`);
+    } else {
+      const newQuiz = createQuiz({
+        title: title.trim(),
+        authorName: authorName.trim() || 'Community Author',
+        category: finalCategory,
+        difficulty,
+        description: description.trim() || 'User created custom quiz.',
+        visibility,
+        questions: formattedQuestions
+      });
+      navigate(`/share/${newQuiz.shareSlug}`);
+    }
   };
 
   const loadRomanticTemplate = (templateType) => {
@@ -164,6 +201,37 @@ export const QuizBuilder = () => {
           id: 'q-g3',
           questionText: 'What is our ultimate dream weekend plan together?',
           options: ['Order takeaway & binge a movie series 🍿', 'Go on a romantic weekend getaway 🧳', 'Cook a gourmet meal together 🍝', 'Late night stargazing & deep talks ✨'],
+          correctIndex: 0
+        }
+      ]);
+    } else if (templateType === 'ask-out') {
+      setTitle('Will You Go Out On A Date With Me? 💌☕');
+      setCategory('Couples & Romance');
+      setDifficulty('Easy');
+      setDescription('A cute, playful date request quiz! Answer the questions and let me know if you will go out with me this weekend!');
+      setQuestions([
+        {
+          id: 'q-a1',
+          questionText: 'What is your absolute dream date vibe?',
+          options: ['Cozy coffee shop & long walk ☕', 'Candlelit dinner & romantic music 🍷', 'Fun arcade / bowling & ice cream 🍦', 'Late night drive & stargazing 🌌'],
+          correctIndex: 0
+        },
+        {
+          id: 'q-a2',
+          questionText: 'If I picked you up for a date this weekend, what treat would make you smile most?',
+          options: ['Your favorite boba / coffee 🧋', 'A bouquet of pretty flowers 💐', 'Delicious chocolates / dessert 🍫', 'All of the above! 💖'],
+          correctIndex: 3
+        },
+        {
+          id: 'q-a3',
+          questionText: 'What is your favorite time of day for a date?',
+          options: ['Sunny afternoon lunch ☀️', 'Sunset & early evening 🌅', 'Late night drinks & dessert 🌙', 'Anytime as long as we are together ❤️'],
+          correctIndex: 3
+        },
+        {
+          id: 'q-a4',
+          questionText: 'So... will you give me the honor of taking you out on a date this weekend?',
+          options: ['YES! I would love to! 💖', 'YES! Name the time & place! ☕', 'YES! 1000% yes! 🌹', 'YES! Absolutely! 🥰'],
           correctIndex: 0
         }
       ]);
@@ -221,6 +289,15 @@ export const QuizBuilder = () => {
             style={{ background: 'rgba(168, 85, 247, 0.2)', borderColor: 'rgba(168, 85, 247, 0.5)', color: '#e9d5ff', fontSize: '0.8rem' }}
           >
             <span>💑 Couple Chemistry & Get-To-Know</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => loadRomanticTemplate('ask-out')}
+            className="btn-secondary"
+            style={{ background: 'rgba(6, 182, 212, 0.2)', borderColor: 'rgba(6, 182, 212, 0.5)', color: '#a5f3fc', fontSize: '0.8rem' }}
+          >
+            <span>💌 "Will You Go Out With Me?" (Ask Out)</span>
           </button>
         </div>
       </div>
