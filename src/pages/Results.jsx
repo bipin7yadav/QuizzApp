@@ -183,117 +183,122 @@ export const Results = () => {
           </div>
         )}
 
-        {/* 💌 Romantic Note / Personal Written Remark Card */}
-        <div style={{ background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.1), rgba(168, 85, 247, 0.1))', border: '1px solid rgba(244, 63, 94, 0.3)', padding: '1.25rem', borderRadius: '16px', textAlign: 'left' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f43f5e', fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.5rem' }}>
-            <Heart size={18} fill="#f43f5e" />
-            <span>Leave a Romantic Note / Personal Remark ❤️</span>
-          </div>
-          <p style={{ color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '0.85rem' }}>
-            Want to say something special or share a sweet remark about this quiz with the author? Write it below!
-          </p>
+        {/* 💌 Romantic Note & Partner Send Cards (Only for Couples & Romance category) */}
+        {isRomanticCategory && (
+          <>
+            {/* 💌 Romantic Note / Personal Written Remark Card */}
+            <div style={{ background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.1), rgba(168, 85, 247, 0.1))', border: '1px solid rgba(244, 63, 94, 0.3)', padding: '1.25rem', borderRadius: '16px', textAlign: 'left' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f43f5e', fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                <Heart size={18} fill="#f43f5e" />
+                <span>Leave a Romantic Note / Personal Remark ❤️</span>
+              </div>
+              <p style={{ color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '0.85rem' }}>
+                Want to say something special or share a sweet remark about this quiz with the author? Write it below!
+              </p>
 
-          {!remarkSaved ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <textarea
-                rows={3}
-                placeholder="Write your sweet note or feedback here... (e.g. 'I loved question #3! Happy Valentine's Day babe! ❤️')"
-                value={remark}
-                onChange={(e) => setRemark(e.target.value)}
-                className="form-input"
-                style={{ padding: '0.75rem', fontSize: '0.85rem', width: '100%', resize: 'none' }}
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  if (!remark.trim()) return;
-                  saveAttemptRemark(lastCompletedResult.id, remark);
-                  setRemarkSaved(true);
-                }}
-                className="btn-primary"
-                style={{ background: 'linear-gradient(135deg, #f43f5e, #e11d48)', padding: '0.5rem 1.25rem', fontSize: '0.85rem', alignSelf: 'flex-end' }}
-              >
-                <Heart size={16} fill="#ffffff" />
-                <span>Save Note ❤️</span>
-              </button>
+              {!remarkSaved ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <textarea
+                    rows={3}
+                    placeholder="Write your sweet note or feedback here... (e.g. 'I loved question #3! Happy Valentine's Day babe! ❤️')"
+                    value={remark}
+                    onChange={(e) => setRemark(e.target.value)}
+                    className="form-input"
+                    style={{ padding: '0.75rem', fontSize: '0.85rem', width: '100%', resize: 'none' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!remark.trim()) return;
+                      saveAttemptRemark(lastCompletedResult.id, remark);
+                      setRemarkSaved(true);
+                    }}
+                    className="btn-primary"
+                    style={{ background: 'linear-gradient(135deg, #f43f5e, #e11d48)', padding: '0.5rem 1.25rem', fontSize: '0.85rem', alignSelf: 'flex-end' }}
+                  >
+                    <Heart size={16} fill="#ffffff" />
+                    <span>Save Note ❤️</span>
+                  </button>
+                </div>
+              ) : (
+                <div style={{ background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(244, 63, 94, 0.4)', padding: '0.85rem', borderRadius: '12px', color: '#fecdd3', fontSize: '0.85rem' }}>
+                  <span style={{ fontWeight: 800, color: '#f43f5e', display: 'block', marginBottom: '0.25rem', fontSize: '0.75rem', textTransform: 'uppercase' }}>
+                    💌 Saved Note:
+                  </span>
+                  <em>"{remark}"</em>
+                </div>
+              )}
             </div>
-          ) : (
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(244, 63, 94, 0.4)', padding: '0.85rem', borderRadius: '12px', color: '#fecdd3', fontSize: '0.85rem' }}>
-              <span style={{ fontWeight: 800, color: '#f43f5e', display: 'block', marginBottom: '0.25rem', fontSize: '0.75rem', textTransform: 'uppercase' }}>
-                💌 Saved Note:
-              </span>
-              <em>"{remark}"</em>
+
+            {/* Send Answers Back to Partner Card */}
+            <div style={{ background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(99, 102, 241, 0.15))', border: '1px solid rgba(244, 63, 94, 0.4)', borderRadius: '16px', padding: '1.25rem', textAlign: 'left' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f43f5e', fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                <Share2 size={18} color="#f43f5e" />
+                <span>💌 Send My Answers & Love Notes Back to My Partner</span>
+              </div>
+              <p style={{ color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '1rem' }}>
+                Send your choices and written remarks back so your loved one can view your reactions on their device!
+              </p>
+
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const mini = {
+                      t: lastCompletedResult.quizTitle,
+                      c: lastCompletedResult.quizCategory,
+                      p: lastCompletedResult.playerName || 'Partner',
+                      d: lastCompletedResult.date,
+                      s: lastCompletedResult.score,
+                      tot: lastCompletedResult.total,
+                      time: lastCompletedResult.timeSec,
+                      ans: lastCompletedResult.selectedAnswers,
+                      rem: lastCompletedResult.questionRemarks,
+                      note: remark || lastCompletedResult.romanticRemark,
+                      q: lastCompletedResult.questions ? lastCompletedResult.questions.map(q => ({ id: q.id, text: q.question, opts: q.options })) : []
+                    };
+                    const payload = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(mini)))));
+                    const responseUrl = `${window.location.origin}/response?data=${payload}`;
+                    const text = `❤️ Hey! I finished your quiz "${lastCompletedResult.quizTitle}"! Here are my choices & secret love notes: ${responseUrl}`;
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+                  }}
+                  className="btn-primary"
+                  style={{ background: 'linear-gradient(135deg, #25d366, #128c7e)', padding: '0.5rem 1rem', fontSize: '0.8rem' }}
+                >
+                  <span>📱 Send Answers via WhatsApp</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const mini = {
+                      t: lastCompletedResult.quizTitle,
+                      c: lastCompletedResult.quizCategory,
+                      p: lastCompletedResult.playerName || 'Partner',
+                      d: lastCompletedResult.date,
+                      s: lastCompletedResult.score,
+                      tot: lastCompletedResult.total,
+                      time: lastCompletedResult.timeSec,
+                      ans: lastCompletedResult.selectedAnswers,
+                      rem: lastCompletedResult.questionRemarks,
+                      note: remark || lastCompletedResult.romanticRemark,
+                      q: lastCompletedResult.questions ? lastCompletedResult.questions.map(q => ({ id: q.id, text: q.question, opts: q.options })) : []
+                    };
+                    const payload = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(mini)))));
+                    const responseUrl = `${window.location.origin}/response?data=${payload}`;
+                    navigator.clipboard.writeText(responseUrl);
+                    alert('Response link copied! Send this link to your partner so they can view your answers.');
+                  }}
+                  className="btn-secondary"
+                  style={{ borderColor: 'rgba(244, 63, 94, 0.5)', color: '#fecdd3', fontSize: '0.8rem' }}
+                >
+                  <Share2 size={14} />
+                  <span>Copy Response Link</span>
+                </button>
+              </div>
             </div>
-          )}
-        </div>
-
-        {/* Send Answers Back to Partner Card */}
-        <div style={{ background: 'linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(99, 102, 241, 0.15))', border: '1px solid rgba(244, 63, 94, 0.4)', borderRadius: '16px', padding: '1.25rem', textAlign: 'left' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f43f5e', fontWeight: 800, fontSize: '0.9rem', marginBottom: '0.5rem' }}>
-            <Share2 size={18} color="#f43f5e" />
-            <span>💌 Send My Answers & Love Notes Back to My Partner</span>
-          </div>
-          <p style={{ color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '1rem' }}>
-            Send your choices and written remarks back so your loved one can view your reactions on their device!
-          </p>
-
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <button
-              type="button"
-              onClick={() => {
-                const mini = {
-                  t: lastCompletedResult.quizTitle,
-                  c: lastCompletedResult.quizCategory,
-                  p: lastCompletedResult.playerName || 'Partner',
-                  d: lastCompletedResult.date,
-                  s: lastCompletedResult.score,
-                  tot: lastCompletedResult.total,
-                  time: lastCompletedResult.timeSec,
-                  ans: lastCompletedResult.selectedAnswers,
-                  rem: lastCompletedResult.questionRemarks,
-                  note: remark || lastCompletedResult.romanticRemark,
-                  q: lastCompletedResult.questions ? lastCompletedResult.questions.map(q => ({ id: q.id, text: q.question, opts: q.options })) : []
-                };
-                const payload = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(mini)))));
-                const responseUrl = `${window.location.origin}/response?data=${payload}`;
-                const text = `❤️ Hey! I finished your quiz "${lastCompletedResult.quizTitle}"! Here are my choices & secret love notes: ${responseUrl}`;
-                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
-              }}
-              className="btn-primary"
-              style={{ background: 'linear-gradient(135deg, #25d366, #128c7e)', padding: '0.5rem 1rem', fontSize: '0.8rem' }}
-            >
-              <span>📱 Send Answers via WhatsApp</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                const mini = {
-                  t: lastCompletedResult.quizTitle,
-                  c: lastCompletedResult.quizCategory,
-                  p: lastCompletedResult.playerName || 'Partner',
-                  d: lastCompletedResult.date,
-                  s: lastCompletedResult.score,
-                  tot: lastCompletedResult.total,
-                  time: lastCompletedResult.timeSec,
-                  ans: lastCompletedResult.selectedAnswers,
-                  rem: lastCompletedResult.questionRemarks,
-                  note: remark || lastCompletedResult.romanticRemark,
-                  q: lastCompletedResult.questions ? lastCompletedResult.questions.map(q => ({ id: q.id, text: q.question, opts: q.options })) : []
-                };
-                const payload = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(mini)))));
-                const responseUrl = `${window.location.origin}/response?data=${payload}`;
-                navigator.clipboard.writeText(responseUrl);
-                alert('Response link copied! Send this link to your partner so they can view your answers.');
-              }}
-              className="btn-secondary"
-              style={{ borderColor: 'rgba(244, 63, 94, 0.5)', color: '#fecdd3', fontSize: '0.8rem' }}
-            >
-              <Share2 size={14} />
-              <span>Copy Response Link</span>
-            </button>
-          </div>
-        </div>
+          </>
+        )}
 
         {/* Action Buttons - Clean Flex Wrapping Layout to prevent overlapping */}
         <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)', display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center' }}>
