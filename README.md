@@ -8,7 +8,13 @@ A high-performance, responsive web application built with **React (Vite/CRA)** a
 
 - 🎨 **Vanilla CSS Glassmorphism**: Tailored dark theme with smooth gradients, responsive grids, and micro-animations.
 - ⚡ **Zero-Auth Architecture**: Instant guest access with complete persistence stored in browser `localStorage`.
-- ⏱ **45-Second Timer**: Per-question live countdown timer with auto-advance and time-low warning pulses.
+- 🎯 **KBC-Style Lifelines**:
+  - **🎯 50:50**: Eliminates 2 incorrect options leaving 1 correct & 1 wrong option.
+  - **👥 Audience Poll**: Displays realistic percentage voting bars over option choices.
+  - **🔄 Skip Question**: Pass difficult questions without score penalties.
+- ⚙️ **Custom Game Rules & Timer Controls**:
+  - Toggle **Timed Mode vs. Untimed Mode** before starting any quiz.
+  - Custom Question Duration: Choose **15s, 30s, 45s, 60s, or 90s** per question.
 - 📱 **Mobile-First Responsiveness**: 
   - **2x2 Options Grid** on mobile viewports for 100% visible gameplay fitting inside screen height.
   - **Mobile Bottom Navigation Bar** with glassmorphic blur and auto-hiding during active gameplay.

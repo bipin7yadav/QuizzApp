@@ -66,96 +66,270 @@ export const BUILT_IN_QUIZZES = [
   },
   {
     id: 'react-101',
-    title: 'React Fundamentals & Core Concepts',
+    title: 'React 18 & Modern Hooks Mastery',
     category: 'React.js',
     difficulty: 'Medium',
-    description: 'Challenge your knowledge of Virtual DOM, hooks, state management, and props in React.',
+    description: 'Master Virtual DOM diffing, useEffect hooks, useCallback optimization, and React 18 state management.',
     icon: 'Code2',
     color: 'from-cyan-500 to-blue-600',
     shareSlug: 'react-101',
     questions: [
       {
         id: 'q-r1',
-        question: 'Which mechanism does React use to maximize rendering performance?',
-        options: ['Direct DOM Manipulation', 'Virtual DOM', 'Shadow DOM only', 'Browser Reloads'],
+        question: 'Which mechanism does React use to maximize rendering performance before DOM updates?',
+        options: ['Direct DOM Manipulation', 'Virtual DOM Tree Reconciliation', 'Shadow DOM encapsulation', 'Full Browser Reloads'],
         correctIndex: 1
       },
       {
         id: 'q-r2',
-        question: 'What are the two primary ways to handle data inside React components?',
-        options: ['State & Props', 'Services & Controllers', 'Context & Reducers only', 'Variables & Functions'],
+        question: 'What are the two primary ways to manage data inside functional React components?',
+        options: ['State & Props', 'Services & Controllers', 'Context & Reducers only', 'Global Variables & Closures'],
         correctIndex: 0
       },
       {
         id: 'q-r3',
-        question: 'What is the primary purpose of the `key` prop when rendering lists in React?',
-        options: ['Styling list items', 'Helping React identify which items have changed or been removed', 'Determining list order', 'Enabling drag and drop'],
+        question: 'What is the primary purpose of the `key` prop when rendering dynamic lists in React?',
+        options: ['Applying CSS styles', 'Helping React identify which items have changed, added, or removed', 'Determining list item order', 'Enabling drag-and-drop animations'],
         correctIndex: 1
       },
       {
         id: 'q-r4',
-        question: 'Which hook is used to perform side effects in functional React components?',
-        options: ['useState', 'useReducer', 'useEffect', 'useMemo'],
-        correctIndex: 2
+        question: 'Which hook should be used to memoize a callback function instance between renders?',
+        options: ['useMemo', 'useCallback', 'useEffect', 'useRef'],
+        correctIndex: 1
       },
       {
         id: 'q-r5',
-        question: 'Does React create a Virtual DOM tree in memory before patching the actual browser DOM?',
-        options: ['True', 'False', 'Only in class components', 'Only in production builds'],
-        correctIndex: 0
+        question: 'How do you store a mutable value in React that persists across renders WITHOUT causing a re-render?',
+        options: ['useState', 'useRef', 'useMemo', 'useReducer'],
+        correctIndex: 1
       },
       {
         id: 'q-r6',
-        question: 'What is the main benefit of the React Context API?',
-        options: ['Faster rendering speed', 'Passing data through component tree without prop drilling', 'Replacing database storage', 'Managing CSS stylesheets'],
+        question: 'What is the primary benefit of the React Context API?',
+        options: ['Faster DOM calculation speed', 'Passing data through component tree without prop drilling', 'Replacing database storage', 'Automating CSS stylesheet imports'],
         correctIndex: 1
+      },
+      {
+        id: 'q-r7',
+        question: 'What does `React.memo` do when wrapping a functional component?',
+        options: ['Prevents re-renders if incoming props have not changed', 'Memoizes state variables permanently', 'Enables server-side rendering automatically', 'Converts component to class component'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-r8',
+        question: 'Which hook was introduced in React 18 for marking non-urgent state updates to keep UI responsive?',
+        options: ['useTransition', 'useDeferredValue', 'useId', 'useSyncExternalStore'],
+        correctIndex: 0
       }
     ]
   },
   {
     id: 'js-101',
-    title: 'JavaScript Essentials & ES6+',
+    title: 'JavaScript ES6+ & Async Deep Dive',
     category: 'JavaScript',
-    difficulty: 'Easy',
-    description: 'Master JavaScript scope, ES6 syntax, closures, and essential array manipulation methods.',
+    difficulty: 'Medium',
+    description: 'Test your understanding of JavaScript Event Loop, closures, Promises, arrow functions, and ES6+ features.',
     icon: 'FileCode2',
     color: 'from-amber-500 to-orange-600',
     shareSlug: 'js-101',
     questions: [
       {
         id: 'q-j1',
-        question: 'Which keywords were introduced in ES6 for block-scoped variable declaration?',
+        question: 'Which keywords were introduced in ES6 for block-scoped variable declarations?',
         options: ['var and let', 'let and const', 'const and type', 'def and val'],
         correctIndex: 1
       },
       {
         id: 'q-j2',
-        question: 'What is the output evaluation of `typeof NaN` in JavaScript?',
+        question: 'What is the evaluated output of `typeof NaN` in JavaScript?',
         options: ['number', 'nan', 'undefined', 'object'],
         correctIndex: 0
       },
       {
         id: 'q-j3',
-        question: 'Which array method creates a new array with all elements that pass a given test condition?',
-        options: ['map()', 'filter()', 'reduce()', 'forEach()'],
-        correctIndex: 1
-      },
-      {
-        id: 'q-j4',
-        question: 'What does ES6 stand for?',
-        options: ['ECMAScript 6', 'ECMA 6', 'ECMAJavaScript 6', 'Extended Scripting 6'],
+        question: 'In the JavaScript Event Loop, which queue takes precedence for immediate execution?',
+        options: ['Microtask Queue (Promises / queueMicrotask)', 'Macrotask Queue (setTimeout / setInterval)', 'DOM Events Queue', 'Render Animation Queue'],
         correctIndex: 0
       },
       {
+        id: 'q-j4',
+        question: 'How does the `this` keyword behave inside an Arrow Function?',
+        options: ['Bound dynamically at call time', 'Lexically bound to surrounding enclosing scope', 'Always points to global window object', 'Undefined in strict mode'],
+        correctIndex: 1
+      },
+      {
         id: 'q-j5',
-        question: 'Which operator is used for strict equality check (compares value and type)?',
+        question: 'Which operator performs strict equality check (comparing both value and data type)?',
         options: ['==', '===', '=', '!='],
         correctIndex: 1
       },
       {
         id: 'q-j6',
         question: 'What is a Closure in JavaScript?',
-        options: ['A function bundled together with references to its outer scope lexical environment', 'A method to close browser windows', 'A syntax error handler', 'A database connection wrapper'],
+        options: ['A function bundled together with references to its surrounding lexical scope', 'A method to close browser windows', 'A syntax error handler', 'A database connection wrapper'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-j7',
+        question: 'What does `Object.freeze(obj)` accomplish in JavaScript?',
+        options: ['Prevents adding, deleting, or modifying existing properties of an object', 'Converts object keys to uppercase', 'Deletes all undefined properties', 'Makes object iterable'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-j8',
+        question: 'Which built-in JS method executes a reducer function on each array element to return a single output value?',
+        options: ['map()', 'filter()', 'reduce()', 'find()'],
+        correctIndex: 2
+      }
+    ]
+  },
+  {
+    id: 'mysql-101',
+    title: 'MySQL & Relational Database Design',
+    category: 'MySQL',
+    difficulty: 'Medium',
+    description: 'Master SQL joins, indexes, ACID transactions, normalization, and InnoDB engine mechanics.',
+    icon: 'Database',
+    color: 'from-blue-500 to-cyan-600',
+    shareSlug: 'mysql-101',
+    questions: [
+      {
+        id: 'q-sql1',
+        question: 'What is the main difference between the `WHERE` and `HAVING` clauses in SQL?',
+        options: ['`WHERE` filters rows before grouping; `HAVING` filters aggregated groups after `GROUP BY`', '`HAVING` is faster than `WHERE`', '`WHERE` only works with numbers', 'They are completely identical'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-sql2',
+        question: 'Which SQL JOIN returns all records from the left table and matching records from the right table?',
+        options: ['INNER JOIN', 'LEFT JOIN (LEFT OUTER JOIN)', 'RIGHT JOIN', 'CROSS JOIN'],
+        correctIndex: 1
+      },
+      {
+        id: 'q-sql3',
+        question: 'What does the `ACID` acronym stand for in database transaction management?',
+        options: ['Atomicity, Consistency, Isolation, Durability', 'Access, Control, Index, Data', 'Array, Column, Index, Directory', 'Automated, Concurrent, Isolated, Distributed'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-sql4',
+        question: 'Which data structure is most commonly utilized by the MySQL InnoDB engine for primary key indexing?',
+        options: ['B-Tree / B+Tree', 'HashTable', 'Binary Search Tree', 'Linked List'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-sql5',
+        question: 'What is the main objective of Database Normalization up to 3NF?',
+        options: ['Increasing table storage size', 'Eliminating redundant data and preventing update anomalies', 'Compressing index files', 'Removing all foreign keys'],
+        correctIndex: 1
+      },
+      {
+        id: 'q-sql6',
+        question: 'Which command deletes all rows from a table by dropping and re-creating the table structure quickly?',
+        options: ['DELETE FROM table', 'TRUNCATE TABLE', 'DROP TABLE', 'REMOVE TABLE'],
+        correctIndex: 1
+      },
+      {
+        id: 'q-sql7',
+        question: 'Which storage engine is the default transactional engine in modern MySQL versions?',
+        options: ['MyISAM', 'InnoDB', 'Memory', 'CSV'],
+        correctIndex: 1
+      }
+    ]
+  },
+  {
+    id: 'python-101',
+    title: 'Python 3 & Data Structures',
+    category: 'Python',
+    difficulty: 'Easy',
+    description: 'Test your Python comprehension, list comprehensions, decorators, generators, and data types.',
+    icon: 'Terminal',
+    color: 'from-emerald-600 to-green-600',
+    shareSlug: 'python-101',
+    questions: [
+      {
+        id: 'q-py1',
+        question: 'Which of the following built-in Python data types is immutable (cannot be modified after creation)?',
+        options: ['List', 'Dictionary', 'Set', 'Tuple'],
+        correctIndex: 3
+      },
+      {
+        id: 'q-py2',
+        question: 'Which keyword turns a Python function into a Generator that yields values lazily on demand?',
+        options: ['return', 'yield', 'emit', 'generate'],
+        correctIndex: 1
+      },
+      {
+        id: 'q-py3',
+        question: 'What is the role of `*args` and `**kwargs` in Python function definitions?',
+        options: ['`*args` passes positional arguments as tuple; `**kwargs` passes keyword arguments as dictionary', 'They enable thread locking', 'They declare global variables', 'They format output strings'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-py4',
+        question: 'What is the Python Global Interpreter Lock (GIL)?',
+        options: ['A mechanism preventing multiple native threads from executing Python bytecodes simultaneously in CPython', 'A file security system', 'A database lock algorithm', 'A compiler optimization flag'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-py5',
+        question: 'What is the evaluated result of `[x**2 for x in range(5) if x % 2 == 0]` in Python?',
+        options: ['[0, 4, 16]', '[1, 9, 25]', '[0, 2, 4]', '[0, 1, 4, 9, 16]'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-py6',
+        question: 'What is the primary difference between `is` and `==` in Python?',
+        options: ['`is` checks memory object identity; `==` checks value equality', '`is` compares strings only', '`==` checks memory addresses', 'They are completely identical'],
+        correctIndex: 0
+      }
+    ]
+  },
+  {
+    id: 'css-101',
+    title: 'CSS3 & Modern Responsive Layouts',
+    category: 'CSS',
+    difficulty: 'Medium',
+    description: 'Challenge your knowledge of CSS Flexbox, Grid, Box Model, specificity, and variables.',
+    icon: 'Palette',
+    color: 'from-pink-500 to-rose-600',
+    shareSlug: 'css-101',
+    questions: [
+      {
+        id: 'q-c1',
+        question: 'Which `box-sizing` value includes padding and border inside the element\'s specified width and height?',
+        options: ['content-box', 'border-box', 'padding-box', 'inherit'],
+        correctIndex: 1
+      },
+      {
+        id: 'q-c2',
+        question: 'In CSS Flexbox, which property aligns items along the primary main axis?',
+        options: ['align-items', 'justify-content', 'align-content', 'flex-direction'],
+        correctIndex: 1
+      },
+      {
+        id: 'q-c3',
+        question: 'What is the correct CSS selector specificity order from HIGHEST to LOWEST priority?',
+        options: ['Inline styles > ID selector > Class selector > Element selector', 'ID selector > Inline styles > Class selector > Element selector', 'Element selector > Class > ID > Inline', 'Class > ID > Inline > Element'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-c4',
+        question: 'Which CSS Grid property enables responsive column layout without hardcoded media queries?',
+        options: ['grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))', 'flex-wrap: wrap', 'column-count: 3', 'display: inline-block'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-c5',
+        question: 'How do you access a CSS custom property (variable) named `--primary-color`?',
+        options: ['color: var(--primary-color)', 'color: $primary-color', 'color: @primary-color', 'color: val(--primary-color)'],
+        correctIndex: 0
+      },
+      {
+        id: 'q-c6',
+        question: 'What is the main difference between `display: none` and `visibility: hidden`?',
+        options: ['`display: none` removes element from layout flow; `visibility: hidden` hides it while preserving layout space', '`visibility: hidden` removes element from DOM', '`display: none` works only in flexbox', 'They behave identically'],
         correctIndex: 0
       }
     ]
@@ -350,33 +524,45 @@ export const QuizProvider = ({ children }) => {
     localStorage.setItem('quizzes_leaderboard', JSON.stringify(leaderboard));
   }, [leaderboard]);
 
+  const [quizSettings, setQuizSettings] = useState({
+    timerEnabled: true,
+    timePerQuestion: 45
+  });
+
   // Timer countdown effect when playing active quiz
   useEffect(() => {
     let interval = null;
-    if (activeQuiz && !isQuizCompleted && timeRemaining > 0) {
+    if (activeQuiz && !isQuizCompleted && quizSettings.timerEnabled && timeRemaining > 0) {
       interval = setInterval(() => {
         setTimeRemaining(prev => Math.max(0, prev - 1));
         setTotalTimeTaken(prev => prev + 1);
       }, 1000);
-    } else if (activeQuiz && !isQuizCompleted && timeRemaining === 0) {
+    } else if (activeQuiz && !isQuizCompleted && quizSettings.timerEnabled && timeRemaining === 0) {
       // Time expired for current question -> auto advance or finish
       if (currentQuestionIndex < activeQuiz.questions.length - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
-        setTimeRemaining(45);
+        setTimeRemaining(quizSettings.timePerQuestion);
       } else {
         finishQuiz();
       }
+    } else if (activeQuiz && !isQuizCompleted && !quizSettings.timerEnabled) {
+      // Untimed mode: count total time taken without question timeout
+      interval = setInterval(() => {
+        setTotalTimeTaken(prev => prev + 1);
+      }, 1000);
     }
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeQuiz, isQuizCompleted, timeRemaining, currentQuestionIndex]);
+  }, [activeQuiz, isQuizCompleted, timeRemaining, currentQuestionIndex, quizSettings]);
 
-  // Start playing a quiz
-  const startQuiz = (quiz) => {
+  // Start playing a quiz with custom timer settings
+  const startQuiz = (quiz, customSettings = null) => {
+    const activeSettings = customSettings || quizSettings;
+    setQuizSettings(activeSettings);
     setActiveQuiz(quiz);
     setCurrentQuestionIndex(0);
     setSelectedAnswers({});
-    setTimeRemaining(45); // 45s default per question
+    setTimeRemaining(activeSettings.timerEnabled ? activeSettings.timePerQuestion : null);
     setTotalTimeTaken(0);
     setIsQuizCompleted(false);
     setLastCompletedResult(null);
@@ -395,7 +581,7 @@ export const QuizProvider = ({ children }) => {
     if (!activeQuiz) return;
     if (currentQuestionIndex < activeQuiz.questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
-      setTimeRemaining(45); // reset question timer
+      setTimeRemaining(quizSettings.timerEnabled ? quizSettings.timePerQuestion : null);
     } else {
       finishQuiz();
     }
@@ -496,6 +682,8 @@ export const QuizProvider = ({ children }) => {
       attempts,
       leaderboard,
       activeQuiz,
+      quizSettings,
+      setQuizSettings,
       currentQuestionIndex,
       selectedAnswers,
       timeRemaining,
