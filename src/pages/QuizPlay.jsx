@@ -76,6 +76,7 @@ export const QuizPlay = () => {
         startQuiz(allQuizzes[0]);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, slug, activeQuiz, allQuizzes]);
 
   useEffect(() => {

@@ -368,6 +368,7 @@ export const QuizProvider = ({ children }) => {
       }
     }
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeQuiz, isQuizCompleted, timeRemaining, currentQuestionIndex]);
 
   // Start playing a quiz
