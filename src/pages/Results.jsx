@@ -61,6 +61,30 @@ export const Results = () => {
 
   const grade = getPerformanceGrade(percentage);
 
+  const buildMiniPayload = (res, currentRemark) => {
+    const sanitizedRemarks = {};
+    if (res.questionRemarks) {
+      Object.keys(res.questionRemarks).forEach(key => {
+        const val = res.questionRemarks[key];
+        sanitizedRemarks[key] = val && val.length > 200 ? val.substring(0, 200) + '...' : val;
+      });
+    }
+    const finalNote = currentRemark || res.romanticRemark;
+    return {
+      t: res.quizTitle,
+      c: res.quizCategory,
+      p: res.playerName || 'Partner',
+      d: res.date,
+      s: res.score,
+      tot: res.total,
+      time: res.timeSec,
+      ans: res.selectedAnswers,
+      rem: sanitizedRemarks,
+      note: finalNote && finalNote.length > 300 ? finalNote.substring(0, 300) + '...' : finalNote,
+      q: res.questions ? res.questions.map(q => ({ id: q.id, text: q.question, opts: q.options })) : []
+    };
+  };
+
   const handleSaveGuestScore = (e) => {
     e.preventDefault();
     if (!guestName.trim()) return;
@@ -244,19 +268,7 @@ export const Results = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    const mini = {
-                      t: lastCompletedResult.quizTitle,
-                      c: lastCompletedResult.quizCategory,
-                      p: lastCompletedResult.playerName || 'Partner',
-                      d: lastCompletedResult.date,
-                      s: lastCompletedResult.score,
-                      tot: lastCompletedResult.total,
-                      time: lastCompletedResult.timeSec,
-                      ans: lastCompletedResult.selectedAnswers,
-                      rem: lastCompletedResult.questionRemarks,
-                      note: remark || lastCompletedResult.romanticRemark,
-                      q: lastCompletedResult.questions ? lastCompletedResult.questions.map(q => ({ id: q.id, text: q.question, opts: q.options })) : []
-                    };
+                    const mini = buildMiniPayload(lastCompletedResult, remark);
                     const payload = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(mini)))));
                     const responseUrl = `${window.location.origin}/response?data=${payload}`;
                     const text = `❤️ Hey! I finished your quiz "${lastCompletedResult.quizTitle}"! Here are my choices & secret love notes: ${responseUrl}`;
@@ -271,19 +283,7 @@ export const Results = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    const mini = {
-                      t: lastCompletedResult.quizTitle,
-                      c: lastCompletedResult.quizCategory,
-                      p: lastCompletedResult.playerName || 'Partner',
-                      d: lastCompletedResult.date,
-                      s: lastCompletedResult.score,
-                      tot: lastCompletedResult.total,
-                      time: lastCompletedResult.timeSec,
-                      ans: lastCompletedResult.selectedAnswers,
-                      rem: lastCompletedResult.questionRemarks,
-                      note: remark || lastCompletedResult.romanticRemark,
-                      q: lastCompletedResult.questions ? lastCompletedResult.questions.map(q => ({ id: q.id, text: q.question, opts: q.options })) : []
-                    };
+                    const mini = buildMiniPayload(lastCompletedResult, remark);
                     const payload = encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(mini)))));
                     const responseUrl = `${window.location.origin}/response?data=${payload}`;
                     navigator.clipboard.writeText(responseUrl);
